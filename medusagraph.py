@@ -7,7 +7,7 @@ import torch
 import torch.nn.functional as F
 from torch_geometric.data import DataLoader
 from torch_geometric.nn import GATConv, global_mean_pool
-from torch_geometric.data import DataLoader
+
 
 from dataset import PDBBindCoor, PDBBindNextStep2
 from model import Net_coor, Net_screen
@@ -45,7 +45,7 @@ def convert_data(input_list, output_file, groundtruth_dir, pdbbind_dir, label_li
 def generate_pose(data_dir, prediction_model, device):
 	test_dataset=PDBBindCoor(root=data_dir, split='test', data_type='autodock')
 	test_loader=DataLoader(test_dataset, batch_size=1)
-	model = torch.load(prediction_model).to(device)
+	model = torch.load(prediction_model, map_location='cpu').to(device)
 
 	output_poses = []
 	for data in test_loader:
@@ -62,7 +62,7 @@ def select_pose(data_dir, prediction_model, selection_model, output_poses, ligan
 	train_dataset = PDBBindNextStep2(root=data_dir_2, model_dir=prediction_model, gpu_id=0, pre_root=data_dir, split='train')
 	test_dataset=PDBBindCoor(root=data_dir_2, split='test')
 	test_loader=DataLoader(test_dataset, batch_size=1)
-	model = torch.load(selection_model).to(device)
+	model = torch.load(selection_model, map_location='cpu').to(device)
 
 	score = []
 	for data in test_loader:

@@ -26,7 +26,7 @@ class PDBBind(InMemoryDataset):
         # super(PDBBind, self).__init__(root, transform, pre_transform, pre_filter)
         super().__init__(root, transform, pre_transform, pre_filter)
         path = os.path.join(self.processed_dir, f'{split}.pt')
-        self.data, self.slices = torch.load(path)
+        self.data, self.slices = torch.load(path, map_location=torch.device('cpu'))
 
     @property
     def raw_file_names(self):
@@ -149,7 +149,7 @@ class PDBBind_test(InMemoryDataset):
         # super(PDBBind, self).__init__(root, transform, pre_transform, pre_filter)
         super().__init__(root, transform, pre_transform, pre_filter)
         path = os.path.join(self.processed_dir, f'{split}.pt')
-        self.data, self.slices = torch.load(path)
+        self.data, self.slices = torch.load(path, map_location=torch.device('cpu'))
 
     @property
     def raw_file_names(self):
@@ -269,7 +269,7 @@ class PDBBindCoor(InMemoryDataset):
         self.data_type = data_type
         super().__init__(root, transform, pre_transform, pre_filter)
         path = os.path.join(self.processed_dir, f'{split}.pt')
-        self.data, self.slices = torch.load(path)
+        self.data, self.slices = torch.load(path, map_location=torch.device('cpu'))
 
     @property
     def raw_file_names(self):
@@ -418,7 +418,7 @@ class PDBBindNextStep(InMemoryDataset):
 
         super().__init__(root, transform, pre_transform, pre_filter)
         path = os.path.join(self.processed_dir, f'{split}.pt')
-        self.data, self.slices = torch.load(path)
+        self.data, self.slices = torch.load(path, map_location=torch.device('cpu'))
 
     @property
     def raw_file_names(self):
@@ -446,7 +446,7 @@ class PDBBindNextStep(InMemoryDataset):
         for split in ['train', 'test']:
             pre_dataset = PDBBindCoor(root=self.pre_root, split=split)
             pre_loader=DataLoader(pre_dataset, batch_size=1)
-            model = torch.load(self.model_dir).to(self.device)
+            model = torch.load(self.model_dir, map_location=torch.device('cpu'))#.to(self.device)
             model.eval()
 
             pbar = tqdm(total=len(pre_dataset))
@@ -581,7 +581,7 @@ class PDBBindNextStep2(InMemoryDataset):
 
         super().__init__(root, transform, pre_transform, pre_filter)
         path = os.path.join(self.processed_dir, f'{split}.pt')
-        self.data, self.slices = torch.load(path)
+        self.data, self.slices = torch.load(path, map_location=torch.device('cpu'))
 
     @property
     def raw_file_names(self):
@@ -610,7 +610,7 @@ class PDBBindNextStep2(InMemoryDataset):
         for split in [self.split]:
             pre_dataset = PDBBindCoor(root=self.pre_root, split=split)
             pre_loader=DataLoader(pre_dataset, batch_size=1)
-            model = torch.load(self.model_dir).to(self.device)
+            model = torch.load(self.model_dir, map_location=self.device)#.to(self.device)
             model.eval()
 
             pbar = tqdm(total=len(pre_dataset))
@@ -739,7 +739,7 @@ class PDBBindScreen(InMemoryDataset):
 
         super().__init__(root, transform, pre_transform, pre_filter)
         path = os.path.join(self.processed_dir, f'{split}.pt')
-        self.data, self.slices = torch.load(path)
+        self.data, self.slices = torch.load(path, map_location=self.device)
 
     @property
     def raw_file_names(self):
@@ -789,7 +789,7 @@ class PDBBindScreen(InMemoryDataset):
             if self.model_dir == 'None':
                 model = None
             else:
-                model = torch.load(self.model_dir).to(self.device)
+                model = torch.load(self.model_dir, map_location=torch.device('cpu'))#.to(self.device)
                 model.eval()
 
             for f in range(files_num):
@@ -924,7 +924,7 @@ class PDBBindScreen2(InMemoryDataset):
 
         super().__init__(root, transform, pre_transform, pre_filter)
         path = os.path.join(self.processed_dir, f'{split}.pt')
-        self.data, self.slices = torch.load(path)
+        self.data, self.slices = torch.load(path, map_location=torch.device('cpu'))
 
     @property
     def raw_file_names(self):
@@ -974,7 +974,7 @@ class PDBBindScreen2(InMemoryDataset):
             if self.model_dir == 'None':
                 model = None
             else:
-                model = torch.load(self.model_dir).to(self.device)
+                model = torch.load(self.model_dir, map_location=torch.device('cpu'))#.to(self.device)
                 model.eval()
 
             for f in range(files_num):
@@ -1136,7 +1136,7 @@ class PDBBindCoorTest(InMemoryDataset):
 
         super().__init__(root, transform, pre_transform, pre_filter)
         path = os.path.join(self.processed_dir, f'{split}.pt')
-        self.data, self.slices = torch.load(path)
+        self.data, self.slices = torch.load(path, map_location=torch.device('cpu'))
 
     @property
     def raw_file_names(self):
