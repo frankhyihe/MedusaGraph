@@ -146,7 +146,7 @@ else:
 print(f"weight: 1:{weight}")
 
 from model import Net_coor, Net_coor_res, Net_coor_dir, Net_coor_len, Net_coor_cent, Net_screen, Net_screen_DTI, Net_screen_energy
-from GNN_DTI.gnn import gnn as Net_graph_DTI
+#from GNN_DTI.gnn import gnn as Net_graph_DTI
 
 if args.model_type == 'Net_coor_res':
     model = Net_coor_res(train_dataset.num_features, args).to(device)
